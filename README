@@ -1,0 +1,130 @@
+Description
+    Everything in this module is exported by default. This module is not
+    intended to be used directly, but is required by each module in the
+    CAD::Drawing tree.
+
+AUTHOR
+      Eric L. Wilhelm
+      ewilhelm at sbcglobal dot net
+      http://pages.sbcglobal.net/mycroft
+
+COPYRIGHT
+    This module is copyright (C) 2003 by Eric L. Wilhelm and A. Zahner Co.
+
+LICENSE
+    This module is distributed under the same terms as Perl. See the Perl
+    source package for details.
+
+    You may use this software under one of the following licenses:
+
+      (1) GNU General Public License
+        (found at http://www.gnu.org/copyleft/gpl.html)
+      (2) Artistic License
+        (found at http://www.perl.com/pub/language/misc/Artistic.html)
+
+NO WARRANTY
+    This software is distributed with ABSOLUTELY NO WARRANTY. The author and
+    his employer will in no way be held liable for any loss or damages
+    resulting from its use.
+
+Modifications
+    The source code of this module is made freely available and
+    distributable under the GPL or Artistic License. Modifications to and
+    use of this software must adhere to one of these licenses. Changes to
+    the code should be noted as such and this notification (as well as the
+    above copyright information) must remain intact on all copies of the
+    code.
+
+    Additionally, while the author is actively developing this code,
+    notification of any intended changes or extensions would be most helpful
+    in avoiding repeated work for all parties involved. Please contact the
+    author with any such development plans.
+
+Changes
+      0.60 First public release
+      0.61 Minor improvements
+
+Useful Functions
+    These were functions that didn't seem appropriate as object-oriented but
+    were needed in multiple places. They are exported by default (as is
+    nearly everything in this package.
+
+  check_select
+
+    Provides a uniform interface to selection processing.
+
+    NOTE: this is not an object method and is exported by default!
+
+    Direct calling should be for internal use only, but you may have been
+    sent to this documentation by one of the modules which uses this
+    function to process %option arguments.
+
+    %opts hash may contain (alias)
+
+      Inclusive lists:
+      "select layers"      (sl)
+      "select colors"      (sc)
+      "select types"       (st)
+      "select linetypes"   (slt)
+
+      Exclusive lists:
+      "not layers"         (nl)
+      "not colors"         (nc)
+      "not types"          (nt)
+      "not linetypes"      (nlt)
+
+    The values must be list references.
+
+    The space-separated terms in the keys above may now be underscore ("_")
+    separated as well (this saves having to double-quote the item when using
+    it as a hash key in the %options argument.)
+
+    If an option is omitted, all of that category are selected.
+
+      ($s, $n) = check_select(\%selection_options);
+
+    $s will be a hash reference to inclusive items $n will be a hash
+    reference to excluded items
+
+    Keys in the returned hash references are according to the above-listed
+    alias conventions ($s->{l} contains a set of true values for selected
+    layers (where the layer name is a string acting as the hash key.))
+
+    Note that the \%selection_options hash reference is a required argument
+    (at this level.) Any functions which make it optional must declare a
+    hash before passing to this.
+
+  checkarcangs
+
+    Performs in-place modification of arc angles in \@angs.
+
+    NOTE: this is not an object method and is exported by default!
+
+    Internal use only.
+
+      checkarcangs(\@angs);
+
+  color_translate
+
+    Translates a list of colors into numbers. Numbers will be passed through
+    (as will unrecognized names!)
+
+      @colors = color_translate(@colors);
+
+Various definitions
+  @aci2hex
+
+    256 value array which contains #RRGGBB photo-style hex codes for each
+    aci color
+
+  @aci2rgb
+
+    Generated from @aci2hex for use in postscript and other items. The idea
+    here is that it is a fairly small set of values and may as well have
+    been generated and placed in this file, rather than constantly
+    loading-down the tight loop of saving values to postscript.
+
+  regen_aci2rgb
+
+    Fairly self-explanatory. Saved here only so I don't lose it.
+
